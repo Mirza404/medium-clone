@@ -17,12 +17,13 @@ class PostFactory extends Factory
      */
     public function definition(): array
     {
+        $title = fake()->sentence();
         return [
             'title' => $title,
             'slug' => \Illuminate\Support\Str::slug($title),
             'content' => fake()->paragraph(5),
             'image' => fake()->imageUrl(640, 480, 'posts'),
-            'category_id' => Category::inRandomOrder->first()->id,
+            'category_id' => Category::inRandomOrder()->first()->id,
             'user_id' => 1,
             'published_at' => fake()->optional()->dateTime(),
         ];
