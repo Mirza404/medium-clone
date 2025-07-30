@@ -15,6 +15,11 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
 
+        User::factory()->create([
+            'name' => 'Admin User',
+            'email' => 'Edin@fake.com'
+        ]);
+
         $categories = ['Technology', 'Health', 'Lifestyle', 'Education', 'Travel', 'Sports'];
 
         foreach ($categories as $category) {
@@ -26,5 +31,6 @@ class DatabaseSeeder extends Seeder
         Post::factory(50)->create([
            
         ]);
+
     }
 }
