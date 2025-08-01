@@ -1,3 +1,4 @@
+
 <div class=" flex bg-white border border-gray-200 rounded-lg shadow-sm mb-8">
     <div class="p-5 flex-1">
         <a href="#">
@@ -18,7 +19,7 @@
         </a>
     </div>
     <a href="#" class="">
-        <img class="rounded-t-lg w-48 h-full object-cover" src="https://flowbite.com/docs/images/blog/image-1.jpg"
+        <img class="rounded-t-lg w-48 h-full object-cover" src={{Storage::url($post->image)}}
             alt="" />
     </a>
 </div>
