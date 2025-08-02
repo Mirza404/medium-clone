@@ -57,4 +57,15 @@ class User extends Authenticatable implements MustVerifyEmail
             return null;
         }
     }
+
+    public function getRouteKeyName()
+    {
+        return 'username';
+    }
+
+    public function posts()
+    { 
+        return $this->hasMany(Post::class);
+    } 
+
 }
