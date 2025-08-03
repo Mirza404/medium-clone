@@ -18,8 +18,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         ->name('post.store');
     Route::get('/@{username}/{post:slug}', [PostController::class, 'show'])
         ->name('post.show');});
-    Route::post('/follow/{user:username', FollowerController::class, 'followUnfollow')
-        ->name('follow.unfollow');
+    Route::post('/follow/{user}', [FollowerController::class, 'followUnfollow'])
+        ->name('follow');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])
