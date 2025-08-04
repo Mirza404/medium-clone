@@ -41,4 +41,8 @@ class Post extends Model
             return null;
         }
     }
+
+    public function claps(){
+        return $this->hasMany(Clap::class);
+    }
 }
