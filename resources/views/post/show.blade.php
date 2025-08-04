@@ -26,7 +26,7 @@
                     </div>
                 </div>
                 {{-- Clap section --}}
-                <x-clap-button />
+                <x-clap-button :post="$post" />
                 {{-- User content section --}}
                 <div class="mt-8">
                     <img src="{{ $post->imageUrl() }}" alt="{{ $post->title }}" class="w-full rounded-lg">
