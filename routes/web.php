@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PublicProfileController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\FollowerController;
+use App\Http\Controllers\ClapController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/@{user}', [PublicProfileController::class, 'show'])
@@ -20,6 +21,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         ->name('post.show');});
     Route::post('/follow/{user}', [FollowerController::class, 'followUnfollow'])
         ->name('follow');
+    Route::post('/clap/{post}', [ClapController::class, 'clap'])
+        ->name('clap');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])
