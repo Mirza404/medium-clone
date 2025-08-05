@@ -2,6 +2,7 @@
 
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
+use \App\Http\Middleware\HandleInertiaRequests;
 
 define('LARAVEL_START', microtime(true));
 
