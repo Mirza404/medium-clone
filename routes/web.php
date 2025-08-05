@@ -6,9 +6,15 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\FollowerController;
 use App\Http\Controllers\ClapController;
 use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
+
 
 Route::get('/@{user}', [PublicProfileController::class, 'show'])
     ->name('profile.show');
+
+Route::get('/deez', function () {
+    return inertia('Home');
+});
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/', [PostController::class, 'index'])
