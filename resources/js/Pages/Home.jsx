@@ -1,7 +1,10 @@
-const Home = () => {
+const Home = ({ message, user }) => {
   return (
-    <div>Home</div>
-  )
-}
+    <div>
+      <h1>{message}</h1>
+      {user && <p>Hello, {user.name}</p>}
+    </div>
+  );
+};
 
-export default Home
+export default Home;
