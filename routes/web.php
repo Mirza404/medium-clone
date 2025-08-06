@@ -13,7 +13,10 @@ Route::get('/@{user}', [PublicProfileController::class, 'show'])
     ->name('profile.show');
 
 Route::get('/deez', function () {
-    return inertia('Home');
+    return Inertia::render('Home', [
+        'message' => 'Welcome to Everbit!',
+        'user' => auth()->user(),
+    ]);
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {
