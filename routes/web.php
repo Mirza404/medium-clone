@@ -19,13 +19,14 @@ Route::get('/@{user}', [PublicProfileController::class, 'show'])
             'user' => auth()->user(),
         ]);
     });
+
     Route::get('/', [PostController::class, 'index'])
         ->name('dashboard');
+    Route::get('/category/{category}', [PostController::class, 'category'])
+        ->name('post.byCategory');
     
     Route::middleware(['auth', 'verified'])->group(function () {
         
-        Route::get('/category/{category}', [PostController::class, 'category'])
-            ->name('post.byCategory');
         Route::get('/post/create', [PostController::class, 'create'])
             ->name('post.create');
         Route::post('/post', [PostController::class, 'store'])
