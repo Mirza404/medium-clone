@@ -12,28 +12,31 @@ use Inertia\Inertia;
 Route::get('/@{user}', [PublicProfileController::class, 'show'])
     ->name('profile.show');
 
-Route::get('/deez', function () {
-    return Inertia::render('Home', [
-        'message' => 'Welcome to Everbit!',
-        'user' => auth()->user(),
-    ]);
-});
-
-Route::middleware(['auth', 'verified'])->group(function () {
+    
+    Route::get('/deez', function () {
+        return Inertia::render('Home', [
+            'message' => 'Welcome to Everbit!',
+            'user' => auth()->user(),
+        ]);
+    });
     Route::get('/', [PostController::class, 'index'])
         ->name('dashboard');
-    Route::get('/category/{category}', [PostController::class, 'category'])
-        ->name('post.byCategory');
-    Route::get('/post/create', [PostController::class, 'create'])
-        ->name('post.create');
-    Route::post('/post', [PostController::class, 'store'])
-        ->name('post.store');
-    Route::get('/@{username}/{post:slug}', [PostController::class, 'show'])
-        ->name('post.show');});
-    Route::post('/follow/{user}', [FollowerController::class, 'followUnfollow'])
-        ->name('follow');
-    Route::post('/clap/{post}', [ClapController::class, 'clap'])
-        ->name('clap');
+    
+    Route::middleware(['auth', 'verified'])->group(function () {
+        
+        Route::get('/category/{category}', [PostController::class, 'category'])
+            ->name('post.byCategory');
+        Route::get('/post/create', [PostController::class, 'create'])
+            ->name('post.create');
+        Route::post('/post', [PostController::class, 'store'])
+            ->name('post.store');
+        Route::get('/@{username}/{post:slug}', [PostController::class, 'show'])
+            ->name('post.show');
+        Route::post('/follow/{user}', [FollowerController::class, 'followUnfollow'])
+            ->name('follow');
+        Route::post('/clap/{post}', [ClapController::class, 'clap'])
+            ->name('clap');
+    });
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])
