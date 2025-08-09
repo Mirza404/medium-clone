@@ -16,7 +16,20 @@ class DatabaseSeeder extends Seeder
 
         User::factory()->create([
             'name' => 'Admin User',
-            'email' => 'Edin@fake.com'
+            'email' => 'test@example.com',
+            'password' => 'password'
+        ]);
+
+        User::factory()->create([
+            'name' => 'Random User',
+            'email' => 'huks@example.com',
+            'password' => 'password'
+        ]);
+
+        User::factory()->create([
+            'name' => 'NonRandom User',
+            'email' => 'ruta@example.com',
+            'password' => 'password'
         ]);
 
         $categories = ['Technology', 'Health', 'Lifestyle', 'Education', 'Travel', 'Sports'];
@@ -26,6 +39,8 @@ class DatabaseSeeder extends Seeder
             
         );
         }
+
+        $this->call(PostSeeder::class);
 
     }
 }
