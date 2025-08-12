@@ -21,8 +21,8 @@
                             @auth
                                 @if ($post->user->id !== auth()->user()->id)
                                     &middot;
-                                    <button x-text="following ? 'Follow' : 'Unfollow'"
-                                        :class="following ? 'text-emerald-600' : 'text-red-600'" @click="follow()">
+                                    <button x-text="following ? 'Unfollow' : 'Follow'"
+                                        :class="following ? 'text-red-600' : 'text-emerald-600'" @click="follow()">
                                     </button>
                                 @endif
                             @endauth
