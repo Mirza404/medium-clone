@@ -27,8 +27,8 @@
                         @if (auth()->user() && auth()->user()->id !== $user->id)
                             <div class="mt-4">
                                 <button @click="follow()" class="rounded-full px-4 py-2 text-white"
-                                    x-text="following ? 'Follow' : 'Unfollow'"
-                                    :class="following ? 'bg-emerald-600' : 'bg-red-600'">
+                                    x-text="following ? 'Unfollow' : 'Follow'"
+                                    :class="following ? 'bg-red-600' : 'bg-emerald-600'">
                                     Follow
                                 </button>
                             </div>
