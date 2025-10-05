@@ -18,7 +18,7 @@ class PostController extends Controller
     {
         $user = auth()->user();
 
-        $query =  Post::with(['user'])
+        $query =  Post::with(['user', 'media'])
             ->where('published_at', '<=', now())
             ->withCount('claps')
             ->latest();
@@ -50,16 +50,39 @@ class PostController extends Controller
     {
         $data = $request->validated();
 
-        $image = $data['image'];
-        $data['user_id'] = Auth::id();
+        // Generate slug from title
         $data['slug'] = Str::slug($data['title']);
 
-        $imagePath = $image->store('posts', 'public');
-        $data['image'] = $imagePath;
+        // Ensure the slug is unique
+        $data['slug'] = $this->makeUniqueSlug($data['slug']);
 
-        Post::create($data);
+        $data['user_id'] = Auth::id();
+
+        $post = Post::create($data);
+
+        $post->refresh(); // Make sure we have the saved model
+        $post->addMediaFromRequest('image')->toMediaCollection();
 
         return redirect()->route('dashboard');
+    }
+
+    /**
+     * Generate a unique slug by appending a number if necessary.
+     *
+     * @param string $slug
+     * @return string
+     */
+    private function makeUniqueSlug(string $slug): string
+    {
+        $originalSlug = $slug;
+        $count = 1;
+
+        // Check if the slug already exists in the database
+        while (Post::where('slug', $slug)->exists()) {
+            $slug = $originalSlug . '-' . $count++;
+        }
+
+        return $slug;
     }
 
     /**
@@ -98,7 +121,11 @@ class PostController extends Controller
 
     public function category(Category $category)
     {
-        $posts = $category->posts()->latest()->simplePaginate(5);
+        $posts = $category
+        ->posts()
+        ->with(['user', 'media'])
+        ->withCount('claps')
+        ->latest()->simplePaginate(5);
         return view('post.index', [
             'posts' => $posts,
         ]);
