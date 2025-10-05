@@ -51,11 +51,11 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     public function imageUrl(){
-        if($this->image){
-            return Storage::url($this->image);
-        } else{
-            return null;
+        $media = $this->getFirstMedia(); 
+        if($media->hasGeneratedConversion($conversionName)){
+            return $media->getUrl($conversionName);
         }
+        return $media->getUrl();
     }
 
     public function getRouteKeyName()
