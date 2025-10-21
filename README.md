@@ -72,3 +72,4 @@ Quick local setup
 
 Video Demo
 --------------------------
+[sample video.webm](https://github.com/user-attachments/assets/a90bf94c-361e-48fa-a35b-d2e3992f7cb3)
