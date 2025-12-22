@@ -11,7 +11,7 @@ use Inertia\Inertia;
 Route::get('/@{user}', [PublicProfileController::class, 'show'])
     ->name('profile.show');
 
-    Route::get('/deez', function () {
+Route::get('/deez', function () {
     return Inertia::render('Home', [
         'message' => 'Welcome to Everbit!',
         'user' => auth()->user(),
