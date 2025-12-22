@@ -1,0 +1,8 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+printf "\n[husky] Running Laravel Pint checks...\n"
+./vendor/bin/pint --test || exit 1
+
+printf "\n[husky] Building assets with Vite...\n"
+npm run build || exit 1
