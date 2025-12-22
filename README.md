@@ -79,7 +79,7 @@ Pre-commit checks
 Continuous Integration
 ----------------------
 - `.github/workflows/ci.yml` splits lint, format, build, and test stages into individual jobs so GitHub highlights the exact failure.
-- Commands mirror local workflows: Pint lint (`./vendor/bin/pint --test`), format validation (`npm run format -- --test`), asset build (`npm run build`), and PHP tests (`php artisan test`) using SQLite + `.env.example`.
+- Each job runs the same commands we use locally: Pint lint (`./vendor/bin/pint --test`), format validation (`npm run format -- --test`), asset builds (`npm run build`), and PHP tests (`php artisan test`) on SQLite with `.env.example`. The tests job also builds assets so the Vite manifest exists before Blade views render.
 
 Video Demo
 --------------------------
