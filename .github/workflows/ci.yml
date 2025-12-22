@@ -1,0 +1,102 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: mbstring, sqlite3, pcntl, bcmath
+          coverage: none
+
+      - name: Install Composer dependencies
+        run: composer install --no-interaction --prefer-dist --no-progress
+
+      - name: Lint (Laravel Pint)
+        run: ./vendor/bin/pint --test
+
+  format:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: mbstring, sqlite3, pcntl, bcmath
+          coverage: none
+
+      - name: Install Composer dependencies
+        run: composer install --no-interaction --prefer-dist --no-progress
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Format test (npm run format -- --test)
+        run: npm run format -- --test
+
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+
+      - name: Install Node dependencies
+        run: npm ci
+
+      - name: Build assets
+        run: npm run build
+
+  tests:
+    runs-on: ubuntu-latest
+    env:
+      APP_ENV: testing
+      DB_CONNECTION: sqlite
+      DB_DATABASE: database/database.sqlite
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: mbstring, sqlite3, pcntl, bcmath
+          coverage: none
+
+      - name: Install Composer dependencies
+        run: composer install --no-interaction --prefer-dist --no-progress
+
+      - name: Prepare environment
+        run: |
+          cp .env.example .env
+          php artisan key:generate
+          touch database/database.sqlite
+
+      - name: PHP Tests
+        run: php artisan test
