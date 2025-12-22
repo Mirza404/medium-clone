@@ -26,7 +26,7 @@ class PostCreateRequest extends FormRequest
             'title' => 'required',
             'content' => 'required',
             'category_id' => ['required', 'exists:categories,id'],
-            'published_at' => ['nullable','date'],
+            'published_at' => ['nullable', 'date'],
         ];
     }
 }

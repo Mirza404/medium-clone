@@ -7,6 +7,7 @@ on:
   pull_request:
 
 jobs:
+<<<<<<< HEAD
   lint:
     runs-on: ubuntu-latest
 
@@ -71,6 +72,8 @@ jobs:
       - name: Build assets
         run: npm run build
 
+=======
+>>>>>>> a90535707e8d360006be38b9d5c1ff9e018fcc57
   tests:
     runs-on: ubuntu-latest
     env:
@@ -98,5 +101,26 @@ jobs:
           php artisan key:generate
           touch database/database.sqlite
 
+<<<<<<< HEAD
+=======
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+
+      - name: Install Node dependencies
+        run: npm ci
+
+      - name: Lint (Laravel Pint)
+        run: ./vendor/bin/pint --test
+
+      - name: Format test (npm run format -- --test)
+        run: npm run format -- --test
+
+      - name: Build assets
+        run: npm run build
+
+>>>>>>> a90535707e8d360006be38b9d5c1ff9e018fcc57
       - name: PHP Tests
         run: php artisan test
