@@ -8,7 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Storage;
 
-class User extends Authenticatable implements MustVerifyEmail   
+class User extends Authenticatable implements MustVerifyEmail
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
@@ -50,12 +50,13 @@ class User extends Authenticatable implements MustVerifyEmail
         ];
     }
 
-    public function imageUrl(){
-        $media = $this->getFirstMedia(); 
-        if($media->hasGeneratedConversion($conversionName)){
-            return $media->getUrl($conversionName);
+    public function imageUrl(): ?string
+    {
+        if (! $this->image) {
+            return null;
         }
-        return $media->getUrl();
+
+        return Storage::url($this->image);
     }
 
     public function getRouteKeyName()
@@ -64,11 +65,11 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     public function posts()
-    { 
+    {
         return $this->hasMany(Post::class);
     }
-    
-       public function following()
+
+    public function following()
     {
         return $this->belongsToMany(User::class, 'followers', 'follower_id', 'user_id');
     }
@@ -77,19 +78,20 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->belongsToMany(User::class, 'followers', 'user_id', 'follower_id');
     }
-    
+
     public function isFollowedBy(?User $user)
     {
-        if (!$user) {
+        if (! $user) {
             return false;
         }
 
         return $this->followers->contains($user->id);
     }
 
-    public function hasClapped(?Post $post){
+    public function hasClapped(?Post $post)
+    {
 
-        if(!$post){
+        if (! $post) {
             return false;
         }
 

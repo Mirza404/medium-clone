@@ -34,29 +34,35 @@ class Post extends Model implements HasMedia
             ->width(1200);
     }
 
-    public function user(){
-        return $this->belongsTo(User::class); 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 
-    public function category(){
+    public function category()
+    {
         return $this->belongsTo(Category::class);
     }
 
-    public function readTime($wordsPerMinute = 100){
+    public function readTime($wordsPerMinute = 100)
+    {
         $wordCount = str_word_count(strip_tags($this->content));
         $minutes = ceil($wordCount / $wordsPerMinute); // Assuming average reading speed of 200 words per minute
+
         return max(1, $minutes);
     }
 
-    public function imageUrl($preview = false){
-        if($this->image){
+    public function imageUrl($preview = false)
+    {
+        if ($this->image) {
             return Storage::url($this->image);
-        } else{
+        } else {
             return null;
         }
     }
 
-    public function claps(){
+    public function claps()
+    {
         return $this->hasMany(Clap::class);
     }
 }
