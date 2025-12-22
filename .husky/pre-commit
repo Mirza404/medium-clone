@@ -1,0 +1,10 @@
+printf "\n[husky] Running Laravel Pint checks on staged PHP files...\n"
+STAGED_PHP_FILES="$(git diff --name-only --cached -- '*.php')"
+if [ -n "$STAGED_PHP_FILES" ]; then
+  ./vendor/bin/pint --test $STAGED_PHP_FILES || exit 1
+else
+  printf "[husky] No staged PHP files detected; skipping Pint.\n"
+fi
+
+printf "\n[husky] Building assets with Vite...\n"
+npm run build || exit 1

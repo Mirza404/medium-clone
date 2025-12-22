@@ -70,6 +70,17 @@ Quick local setup
    or
    - `composer run dev`
 
+Pre-commit checks
+-----------------
+- Husky installs automatically after `npm install` (via the `prepare` script) and blocks commits when formatting or builds fail.
+- The `.husky/pre-commit` hook runs `./vendor/bin/pint --test` only on staged PHP files to ensure formatting, then `npm run build` to confirm the Vite build succeeds.
+- Fix formatting with `npm run format` (or `./vendor/bin/pint`) and rerun the commit once both checks pass.
+
+Continuous Integration
+----------------------
+- `.github/workflows/ci.yml` splits lint, format, build, and test stages into individual jobs so GitHub highlights the exact failure.
+- Each job runs the same commands we use locally: Pint lint (`./vendor/bin/pint --test`), format validation (`npm run format -- --test`), asset builds (`npm run build`), and PHP tests (`php artisan test`) on SQLite with `.env.example`. The tests job also builds assets so the Vite manifest exists before Blade views render.
+
 Video Demo
 --------------------------
 [sample video.webm](https://github.com/user-attachments/assets/a90bf94c-361e-48fa-a35b-d2e3992f7cb3)

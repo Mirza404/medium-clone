@@ -2,11 +2,10 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Illuminate\Database\Seeder;
 use App\Models\Category;
 use App\Models\Post;
 use App\Models\User;
+use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 
 class PostSeeder extends Seeder
@@ -23,6 +22,7 @@ class PostSeeder extends Seeder
         // Check if we have users and categories to work with
         if ($userIds->isEmpty() || $categoryIds->isEmpty()) {
             echo "Please run the UserSeeder and CategorySeeder first.\n";
+
             return;
         }
 
@@ -38,10 +38,9 @@ class PostSeeder extends Seeder
                 // Use a placeholder image from an online service
                 // Note: This URL will not persist if you don't save the image locally
                 // but it's a good way to have a visual reference in development.
-                'image' => 'https://picsum.photos/seed/' . rand(100, 999) . '/800/600',
+                'image' => 'https://picsum.photos/seed/'.rand(100, 999).'/800/600',
                 'published_at' => fake()->dateTimeBetween('-1 year', 'now'),
             ]);
         }
     }
 }
-

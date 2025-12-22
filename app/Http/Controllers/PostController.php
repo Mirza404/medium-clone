@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Post;
+use App\Http\Requests\PostCreateRequest;
 use App\Models\Category;
+use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
-use App\Http\Requests\PostCreateRequest;
 
 class PostController extends Controller
 {
@@ -18,7 +18,7 @@ class PostController extends Controller
     {
         $user = auth()->user();
 
-        $query =  Post::with(['user', 'media'])
+        $query = Post::with(['user', 'media'])
             ->where('published_at', '<=', now())
             ->withCount('claps')
             ->latest();
@@ -28,6 +28,7 @@ class PostController extends Controller
         }
 
         $posts = $query->simplePaginate(5);
+
         return view('post.index', [
             'posts' => $posts,
         ]);
@@ -39,6 +40,7 @@ class PostController extends Controller
     public function create()
     {
         $categories = Category::get();
+
         return view('post.create', ['categories' => $categories]);
 
     }
@@ -68,9 +70,6 @@ class PostController extends Controller
 
     /**
      * Generate a unique slug by appending a number if necessary.
-     *
-     * @param string $slug
-     * @return string
      */
     private function makeUniqueSlug(string $slug): string
     {
@@ -79,7 +78,7 @@ class PostController extends Controller
 
         // Check if the slug already exists in the database
         while (Post::where('slug', $slug)->exists()) {
-            $slug = $originalSlug . '-' . $count++;
+            $slug = $originalSlug.'-'.$count++;
         }
 
         return $slug;
@@ -88,7 +87,7 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      */
-     public function show(string $username, Post $post)
+    public function show(string $username, Post $post)
     {
         return view('post.show', [
             'post' => $post,
@@ -122,10 +121,11 @@ class PostController extends Controller
     public function category(Category $category)
     {
         $posts = $category
-        ->posts()
-        ->with(['user', 'media'])
-        ->withCount('claps')
-        ->latest()->simplePaginate(5);
+            ->posts()
+            ->with(['user', 'media'])
+            ->withCount('claps')
+            ->latest()->simplePaginate(5);
+
         return view('post.index', [
             'posts' => $posts,
         ]);
