@@ -70,6 +70,12 @@ Quick local setup
    or
    - `composer run dev`
 
+Pre-commit checks
+-----------------
+- Husky installs automatically after `npm install` (via the `prepare` script) and blocks commits when formatting or builds fail.
+- The `.husky/pre-commit` hook runs `./vendor/bin/pint --test` only on staged PHP files to ensure formatting, then `npm run build` to confirm the Vite build succeeds.
+- Fix formatting with `npm run format` (or `./vendor/bin/pint`) and rerun the commit once both checks pass.
+
 Video Demo
 --------------------------
 [sample video.webm](https://github.com/user-attachments/assets/a90bf94c-361e-48fa-a35b-d2e3992f7cb3)
