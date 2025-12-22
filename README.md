@@ -76,6 +76,11 @@ Pre-commit checks
 - The `.husky/pre-commit` hook runs `./vendor/bin/pint --test` only on staged PHP files to ensure formatting, then `npm run build` to confirm the Vite build succeeds.
 - Fix formatting with `npm run format` (or `./vendor/bin/pint`) and rerun the commit once both checks pass.
 
+Continuous Integration
+----------------------
+- `.github/workflows/ci.yml` splits lint, format, build, and test stages into individual jobs so GitHub highlights the exact failure.
+- Commands mirror local workflows: Pint lint (`./vendor/bin/pint --test`), format validation (`npm run format -- --test`), asset build (`npm run build`), and PHP tests (`php artisan test`) using SQLite + `.env.example`.
+
 Video Demo
 --------------------------
 [sample video.webm](https://github.com/user-attachments/assets/a90bf94c-361e-48fa-a35b-d2e3992f7cb3)
