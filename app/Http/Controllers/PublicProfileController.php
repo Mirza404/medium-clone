@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Http\Request;
 
 class PublicProfileController extends Controller
 {
-    public function show(Request $request, User $user){
+    public function show(Request $request, User $user)
+    {
 
         $posts = $user->posts()->latest()->paginate();
 
