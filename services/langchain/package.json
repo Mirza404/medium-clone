@@ -12,6 +12,7 @@
   "type": "commonjs",
   "dependencies": {
     "@langchain/core": "^1.1.29",
+    "@langchain/google-genai": "^2.1.22",
     "langchain": "^1.2.28"
   }
 }
