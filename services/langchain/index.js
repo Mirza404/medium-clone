@@ -8,6 +8,7 @@ hydrateEnv();
 
 const PORT = Number(process.env.PORT ?? 4000);
 const apiKey = process.env.GOOGLE_API_KEY;
+const internalKey = process.env.INTERNAL_SHARED_SECRET;
 
 if (!apiKey) {
     console.error("Missing GOOGLE_API_KEY. Set it in services/langchain/.env before starting the server.");
@@ -34,6 +35,12 @@ const server = createServer(async (req, res) => {
     }
 
     if (req.method === "POST" && url.pathname === "/chat") {
+        if (!authorize(req)) {
+            res.writeHead(401, { "Content-Type": "application/json" });
+            res.end(JSON.stringify({ error: "Unauthorized" }));
+            return;
+        }
+
         let bodyText = "";
         for await (const chunk of req) {
             bodyText += chunk.toString();
@@ -135,4 +142,17 @@ function extractMessage(aiMessage) {
     }
 
     return "";
+}
+
+function authorize(req) {
+    if (!internalKey) {
+        return true;
+    }
+
+    const header = req.headers?.["x-internal-key"];
+    if (Array.isArray(header)) {
+        return header.includes(internalKey);
+    }
+
+    return typeof header === "string" && header === internalKey;
 }
