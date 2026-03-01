@@ -24,3 +24,4 @@ Homestead.yaml
 Thumbs.db
 storage/media-library
 /services/langchain/node_modules
+/services/langchain/.env
