@@ -6,6 +6,7 @@ use App\Http\Controllers\LangchainController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PublicProfileController;
+use App\Http\Controllers\ReadingListController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/@{user}', [PublicProfileController::class, 'show'])
@@ -32,6 +33,17 @@ Route::middleware(['auth', 'verified'])->group(function () {
         ->name('ai.create');
     Route::post('/ai/chat', [LangchainController::class, 'chat'])
         ->name('ai.chat');
+});
+
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/reading-lists/create', [ReadingListController::class, 'create'])
+        ->name('reading-lists.create');
+
+    Route::post('/reading-lists', [ReadingListController::class, 'store'])
+        ->name('reading-lists.store');
+
+    Route::get('/reading-lists/{readingList}', [ReadingListController::class, 'show'])
+        ->name('reading-lists.show');
 });
 
 Route::middleware('auth')->group(function () {
