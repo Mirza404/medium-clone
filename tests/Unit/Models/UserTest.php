@@ -12,14 +12,14 @@ it('builds avatar urls using the storage facade and returns null when missing', 
         ->andReturn('http://example.test/storage/avatars/john.png');
 
     $userWithImage = new User(['image' => 'avatars/john.png']);
-    $userWithoutImage = new User();
+    $userWithoutImage = new User;
 
     expect($userWithImage->imageUrl())->toBe('http://example.test/storage/avatars/john.png');
     expect($userWithoutImage->imageUrl())->toBeNull();
 });
 
 it('uses the username as the route key', function () {
-    $user = new User();
+    $user = new User;
 
     expect($user->getRouteKeyName())->toBe('username');
 });

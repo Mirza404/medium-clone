@@ -6,7 +6,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Storage;
 
 it('calculates read time by rounding up to the nearest minute', function () {
-    $post = new Post();
+    $post = new Post;
     $post->content = str_repeat('word ', 250);
 
     expect($post->readTime())->toEqual(3);
@@ -22,9 +22,9 @@ it('returns storage url when an image exists and null otherwise', function () {
         ->with('posts/foo.jpg')
         ->andReturn('http://example.test/storage/posts/foo.jpg');
 
-    $postWithImage = new Post();
+    $postWithImage = new Post;
     $postWithImage->image = 'posts/foo.jpg';
-    $postWithoutImage = new Post();
+    $postWithoutImage = new Post;
 
     expect($postWithImage->imageUrl())->toBe('http://example.test/storage/posts/foo.jpg');
     expect($postWithoutImage->imageUrl())->toBeNull();
