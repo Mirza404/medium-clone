@@ -13,7 +13,7 @@
 
 pest()->extend(Tests\TestCase::class)
     ->use(Illuminate\Foundation\Testing\RefreshDatabase::class)
-    ->in('Feature');
+    ->in('Feature', 'Unit');
 
 /*
 |--------------------------------------------------------------------------
@@ -44,4 +44,13 @@ expect()->extend('toBeOne', function () {
 function something()
 {
     // ..
+}
+
+function fakeImageUpload(string $filename = 'fake-image.png'): \Illuminate\Http\UploadedFile
+{
+    $path = tempnam(sys_get_temp_dir(), 'pest-img-');
+    $pixel = base64_decode('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8Xw8AAuMBg55w+l0AAAAASUVORK5CYII=');
+    file_put_contents($path, $pixel);
+
+    return new \Illuminate\Http\UploadedFile($path, $filename, 'image/png', null, true);
 }
