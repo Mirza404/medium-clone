@@ -48,6 +48,28 @@ Important config & tooling
 - Queue default driver set to database in [config/queue.php](config/queue.php).
 - Tests: Pest + PHPUnit. See tests in [tests/Feature](tests/Feature) and [tests/Unit](tests/Unit). Example registration test: [tests/Feature/Auth/RegistrationTest.php](tests/Feature/Auth/RegistrationTest.php).
 
+Test coverage snapshot
+----------------------
+- `./vendor/bin/pest` (48 tests / 140 assertions) completes in **~6.8s**; aggregate coverage currently sits at **94.9 %**.
+- Highlights:
+  - **Auth surface** – every controller/request involved in onboarding, login, password reset, verification prompts, and session handling sits at 100 % except for `EmailVerificationNotificationController` (still pending tests) and `VerifyEmailController` (80 % with signature validation exercised).
+  - **Core app controllers** – `PostController` (85.4 %), `ProfileController` (95.2 %), `PublicProfileController`, `FollowerController`, and `ClapController` all receive direct feature coverage to ensure feed filtering, CRUD flows, and social interactions behave under authenticated sessions.
+  - **Validation layers** – `LoginRequest`, `PostCreateRequest`, and `ProfileUpdateRequest` are fully covered, including rate‑limiting and file/type checks.
+  - **Domain models & View components** – Category/Clap/Follower/Post/User models and Blade components (`AppLayout`, `CategoryTabs`, `GuestLayout`) are exercised end‑to‑end, confirming read‑time helpers, relationship wiring, and render contracts.
+
+
+
+Pre-commit checks
+-----------------
+- Husky installs automatically after `npm install` (via the `prepare` script) and blocks commits when formatting or builds fail.
+- The `.husky/pre-commit` hook runs `./vendor/bin/pint --test` only on staged PHP files to ensure formatting, then `npm run build` to confirm the Vite build succeeds.
+- Fix formatting with `npm run format` (or `./vendor/bin/pint`) and rerun the commit once both checks pass.
+
+Continuous Integration
+----------------------
+- `.github/workflows/ci.yml` splits lint, format, build, and test stages into individual jobs so GitHub highlights the exact failure.
+- Each job runs the same commands we use locally: Pint lint (`./vendor/bin/pint --test`), format validation (`npm run format -- --test`), asset builds (`npm run build`), and PHP tests (`php artisan test`) on SQLite with `.env.example`. The tests job also builds assets so the Vite manifest exists before Blade views render.
+
 Quick local setup
 -----------------
 1. Copy .env and set credentials:
@@ -69,17 +91,6 @@ Quick local setup
    - `php artisan serve` 
    or
    - `composer run dev`
-
-Pre-commit checks
------------------
-- Husky installs automatically after `npm install` (via the `prepare` script) and blocks commits when formatting or builds fail.
-- The `.husky/pre-commit` hook runs `./vendor/bin/pint --test` only on staged PHP files to ensure formatting, then `npm run build` to confirm the Vite build succeeds.
-- Fix formatting with `npm run format` (or `./vendor/bin/pint`) and rerun the commit once both checks pass.
-
-Continuous Integration
-----------------------
-- `.github/workflows/ci.yml` splits lint, format, build, and test stages into individual jobs so GitHub highlights the exact failure.
-- Each job runs the same commands we use locally: Pint lint (`./vendor/bin/pint --test`), format validation (`npm run format -- --test`), asset builds (`npm run build`), and PHP tests (`php artisan test`) on SQLite with `.env.example`. The tests job also builds assets so the Vite manifest exists before Blade views render.
 
 Video Demo
 --------------------------
