@@ -27,14 +27,27 @@ class ReadingListController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create() {}
+    public function create()
+    {
+        return view('reading-list.create');
+    }
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(StoreReadingListRequest $request)
     {
-        //
+        $data = $request->validated();
+
+        $data['user_id'] = $request->user()->id;
+
+        $data['slug'] = Str::slug($data['title']);
+
+        $data['slug'] = $this->makeUniqueSlug($data['slug']);
+
+        $reading_list = $request->user()->readingLists()->create($data);
+
+        return redirect()->route('reading-lists.show', ['readingList' => $reading_list]);
     }
 
     /**

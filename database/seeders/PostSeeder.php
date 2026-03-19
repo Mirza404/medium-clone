@@ -15,32 +15,32 @@ class PostSeeder extends Seeder
      */
     public function run(): void
     {
-        // Fetch all user and category IDs to assign posts to them
-        $userIds = User::pluck('id');
-        $categoryIds = Category::pluck('id');
+        $users = User::all();
+        $categories = Category::all();
 
-        // Check if we have users and categories to work with
-        if ($userIds->isEmpty() || $categoryIds->isEmpty()) {
-            echo "Please run the UserSeeder and CategorySeeder first.\n";
+        if ($users->isEmpty() || $categories->isEmpty()) {
+            $this->command?->warn('Seed users and categories before running the PostSeeder.');
 
             return;
         }
 
-        // Create 25 random posts
-        for ($i = 0; $i < 25; $i++) {
-            $title = fake()->sentence();
-            Post::create([
-                'title' => $title,
-                'slug' => Str::slug($title),
-                'content' => fake()->paragraphs(rand(3, 8), true),
-                'user_id' => fake()->randomElement($userIds),
-                'category_id' => fake()->randomElement($categoryIds),
-                // Use a placeholder image from an online service
-                // Note: This URL will not persist if you don't save the image locally
-                // but it's a good way to have a visual reference in development.
-                'image' => 'https://picsum.photos/seed/'.rand(100, 999).'/800/600',
-                'published_at' => fake()->dateTimeBetween('-1 year', 'now'),
-            ]);
-        }
+        $faker = fake();
+
+        $users->each(function (User $user) use ($categories, $faker) {
+            $postCount = $user->email === 'test@example.com' ? 5 : random_int(2, 4);
+
+            for ($i = 0; $i < $postCount; $i++) {
+                $title = $faker->sentence();
+
+                Post::create([
+                    'title' => $title,
+                    'slug' => Str::slug($title).'-'.Str::random(6),
+                    'content' => $faker->paragraphs(random_int(3, 7), true),
+                    'user_id' => $user->id,
+                    'category_id' => $categories->random()->id,
+                    'published_at' => $faker->boolean(75) ? $faker->dateTimeBetween('-9 months', 'now') : null,
+                ]);
+            }
+        });
     }
 }
