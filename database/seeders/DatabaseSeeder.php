@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Category;
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -14,30 +15,22 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
 
-        User::factory()->create([
-            'name' => 'Admin User',
-            'email' => 'test@example.com',
-            'password' => 'password',
-        ]);
+        User::updateOrCreate(
+            ['email' => 'test@example.com'],
+            [
+                'name' => 'Admin User',
+                'username' => 'admin',
+                'email_verified_at' => now(),
+                'password' => Hash::make('password'),
+            ]
+        );
 
-        User::factory()->create([
-            'name' => 'Random User',
-            'email' => 'huks@example.com',
-            'password' => 'password',
-        ]);
-
-        User::factory()->create([
-            'name' => 'NonRandom User',
-            'email' => 'ruta@example.com',
-            'password' => 'password',
-        ]);
+        User::factory(10)->create();
 
         $categories = ['Technology', 'Health', 'Lifestyle', 'Education', 'Travel', 'Sports'];
 
         foreach ($categories as $category) {
-            Category::create(['name' => $category],
-
-            );
+            Category::firstOrCreate(['name' => $category]);
         }
 
         $this->call(PostSeeder::class);
