@@ -27,7 +27,8 @@ class ReadingListController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create() {
+    public function create()
+    {
         return view('reading-list.create');
     }
 
@@ -45,7 +46,7 @@ class ReadingListController extends Controller
         $data['slug'] = $this->makeUniqueSlug($data['slug']);
 
         $reading_list = $request->user()->readingLists()->create($data);
-        
+
         return redirect()->route('reading-lists.show', ['readingList' => $reading_list]);
     }
 
