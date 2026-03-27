@@ -2,21 +2,14 @@
 
 use App\Http\Controllers\ClapController;
 use App\Http\Controllers\FollowerController;
+use App\Http\Controllers\LangchainController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PublicProfileController;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
 Route::get('/@{user}', [PublicProfileController::class, 'show'])
     ->name('profile.show');
-
-Route::get('/deez', function () {
-    return Inertia::render('Home', [
-        'message' => 'Welcome to Everbit!',
-        'user' => auth()->user(),
-    ]);
-});
 
 Route::get('/', [PostController::class, 'index'])
     ->name('dashboard');
@@ -35,6 +28,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
         ->name('follow');
     Route::post('/clap/{post}', [ClapController::class, 'clap'])
         ->name('clap');
+    Route::get('/ai', [LangchainController::class, 'create'])
+        ->name('ai.create');
+    Route::post('/ai/chat', [LangchainController::class, 'chat'])
+        ->name('ai.chat');
 });
 
 Route::middleware('auth')->group(function () {

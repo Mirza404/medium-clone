@@ -35,4 +35,10 @@ return [
         ],
     ],
 
+    'langchain' => [
+        'base_url' => env('LANGCHAIN_SERVICE_URL', 'http://127.0.0.1:4000'),
+        'key' => env('LANGCHAIN_SERVICE_KEY'),
+        'timeout' => env('LANGCHAIN_SERVICE_TIMEOUT', 15),
+    ],
+
 ];
