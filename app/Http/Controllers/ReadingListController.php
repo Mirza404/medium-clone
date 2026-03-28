@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreReadingListRequest;
 use App\Http\Requests\UpdateReadingListRequest;
 use App\Models\ReadingList;
+use Illuminate\Support\Str;
 
 class ReadingListController extends Controller
 {
@@ -48,6 +49,19 @@ class ReadingListController extends Controller
         $reading_list = $request->user()->readingLists()->create($data);
 
         return redirect()->route('reading-lists.show', ['readingList' => $reading_list]);
+    }
+
+    private function makeUniqueSlug(string $slug): string
+    {
+        $originalSlug = $slug;
+        $count = 1;
+
+        // Check if the slug already exists in the database
+        while (ReadingList::where('slug', $slug)->exists()) {
+            $slug = $originalSlug.'-'.$count++;
+        }
+
+        return $slug;
     }
 
     /**
