@@ -13,6 +13,7 @@ class ReadingList extends Model
         'title',
         'description',
         'slug',
+        'user_id',
     ];
 
     public function posts()
