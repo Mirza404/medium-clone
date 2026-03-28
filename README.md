@@ -81,6 +81,9 @@ Continuous Integration
 - `.github/workflows/ci.yml` splits lint, format, build, and test stages into individual jobs so GitHub highlights the exact failure.
 - Each job runs the same commands we use locally: Pint lint (`./vendor/bin/pint --test`), format validation (`npm run format -- --test`), asset builds (`npm run build`), and PHP tests (`php artisan test`) on SQLite with `.env.example`. The tests job also builds assets so the Vite manifest exists before Blade views render.
 
+## Example Workflow for Post creation
+
+
 Video Demo
 --------------------------
 [sample video.webm](https://github.com/user-attachments/assets/a90bf94c-361e-48fa-a35b-d2e3992f7cb3)
