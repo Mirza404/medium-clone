@@ -7,6 +7,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PublicProfileController;
 use App\Http\Controllers\ReadingListController;
+use App\Http\Controllers\ReadingListPostController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/@{user}', [PublicProfileController::class, 'show'])
@@ -44,6 +45,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/reading-lists/{readingList}', [ReadingListController::class, 'show'])
         ->name('reading-lists.show');
+
+    Route::post('/reading-lists/{readingList}/posts/{post}', [ReadingListPostController::class, 'toggle'])
+        ->name('reading-lists.posts.toggle');
 });
 
 Route::middleware('auth')->group(function () {
