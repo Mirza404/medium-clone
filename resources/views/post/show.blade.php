@@ -46,6 +46,9 @@
                     </div>
                 </div>
 
+                {{-- Reading list section --}}
+                <x-reading-list-button :post="$post" :reading-lists="$readingLists" />
+
                 <div class="mt-8 ">
                     <span class="px-4 py-2 bg-gray-300 rounded-2xl">
                         {{ $post->category->name }}
