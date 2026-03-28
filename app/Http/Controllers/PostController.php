@@ -89,8 +89,30 @@ class PostController extends Controller
      */
     public function show(string $username, Post $post)
     {
+        $readingLists = auth()->check()
+            ? auth()->user()->readingLists()
+                ->select('reading_lists.id', 'reading_lists.title')
+                ->withCount([
+                    'posts as attached' => function ($query) use ($post) {
+                        $query->where('post_id', $post->id);
+                    },
+                ])
+                ->orderBy('reading_lists.title')
+                ->get()
+                ->map(function ($list) {
+                    return [
+                        'id' => $list->id,
+                        'title' => $list->title,
+                        'attached' => (bool) $list->attached,
+                    ];
+                })
+                ->values()
+                ->all()
+            : [];
+
         return view('post.show', [
             'post' => $post,
+            'readingLists' => $readingLists,
         ]);
     }
 
