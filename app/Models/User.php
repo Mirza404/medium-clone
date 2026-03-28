@@ -69,6 +69,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Post::class);
     }
 
+    public function readingLists()
+    {
+        return $this->hasMany(ReadingList::class);
+    }
+
     public function following()
     {
         return $this->belongsToMany(User::class, 'followers', 'follower_id', 'user_id');
@@ -96,5 +101,16 @@ class User extends Authenticatable implements MustVerifyEmail
         }
 
         return $post->claps()->where('user_id', $this->id)->exists();
+    }
+
+    public function hasListed(?Post $post)
+    {
+        if (! $post) {
+            return false;
+        }
+
+        return $post->readingLists()
+            ->where('reading_lists.user_id', $this->id)
+            ->exists();
     }
 }

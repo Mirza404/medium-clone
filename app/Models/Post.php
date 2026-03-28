@@ -61,6 +61,11 @@ class Post extends Model implements HasMedia
         }
     }
 
+    public function readingLists()
+    {
+        return $this->belongsToMany(ReadingList::class);
+    }
+
     public function claps()
     {
         return $this->hasMany(Clap::class);
