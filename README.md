@@ -40,7 +40,7 @@ Project structure (high level)
 
 Important config & tooling
 --------------------------
-- Frontend: Blade [resources/js/app.jsx](resources/views) and [vite.config.js](vite.config.js).
+- Frontend: Blade [resources/js/app.js](resources/views) and [vite.config.js](vite.config.js).
 - Tailwind CSS config: [tailwind.config.js](tailwind.config.js) and [postcss.config.js](postcss.config.js).
 - Filesystems and storage: [config/filesystems.php](config/filesystems.php) — ensure `APP_URL` and storage link are configured (`php artisan storage:link`).
 - Database config: [config/database.php](config/database.php).
