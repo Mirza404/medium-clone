@@ -1,5 +1,6 @@
 printf "\n[husky] Running Laravel Pint checks on staged PHP files...\n"
-STAGED_PHP_FILES="$(git diff --name-only --cached -- '*.php')"
+# Ignore deleted/renamed files so Pint only sees files that exist on disk.
+STAGED_PHP_FILES="$(git diff --name-only --cached --diff-filter=ACMR -- '*.php')"
 if [ -n "$STAGED_PHP_FILES" ]; then
   ./vendor/bin/pint --test $STAGED_PHP_FILES || exit 1
 else
