@@ -45,11 +45,15 @@ class Post extends Model implements HasMedia
     }
 
     public function readTime($wordsPerMinute = 100)
-    {
+    { // Assuming average reading speed of 100 words per minute
         $wordCount = str_word_count(strip_tags($this->content));
-        $minutes = ceil($wordCount / $wordsPerMinute); // Assuming average reading speed of 200 words per minute
+        $minutes = $wordCount / $wordsPerMinute;
 
-        return max(1, $minutes);
+        if ($minutes < 1) {
+            return 0;
+        }
+
+        return (int) ceil($minutes);
     }
 
     public function imageUrl($preview = false)
