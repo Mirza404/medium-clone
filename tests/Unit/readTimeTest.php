@@ -9,7 +9,7 @@ test('calculates reading time from post content', function () {
         'content' => str_repeat('word ', 250),
     ]);
 
-    expect($post->readTime())->toBeInt->toBe(3);
+    expect($post->readTime())->toBeInt()->toBe(3);
 });
 
 test('reading time handles below 100 words', function () {
@@ -25,5 +25,5 @@ test('reading time ignores html tags', function () {
         'content' => '<p>This is a sample reader</p>',
     ]);
 
-    expect($post->readTime(wordsPerMinute: 2))->toBeInt->toBe(3);
+    expect($post->readTime(wordsPerMinute: 2))->toBeInt()->toBe(3);
 });
