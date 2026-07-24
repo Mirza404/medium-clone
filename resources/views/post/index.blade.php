@@ -21,7 +21,6 @@
                         @endforelse
                     </ul>
 
-
                 </div>
                 {{ $posts->links() }}
             </div>
