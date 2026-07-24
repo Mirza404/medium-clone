@@ -57,8 +57,6 @@ Test coverage snapshot
   - **Validation layers** – `LoginRequest`, `PostCreateRequest`, and `ProfileUpdateRequest` are fully covered, including rate‑limiting and file/type checks.
   - **Domain models & View components** – Category/Clap/Follower/Post/User models and Blade components (`AppLayout`, `CategoryTabs`, `GuestLayout`) are exercised end‑to‑end, confirming read‑time helpers, relationship wiring, and render contracts.
 
-
-
 Pre-commit checks
 -----------------
 - Husky installs automatically after `npm install` (via the `prepare` script) and blocks commits when formatting or builds fail.
@@ -88,7 +86,7 @@ Quick local setup
 6. Build assets / run dev server:
    - `npm run dev`
 7. Serve app:
-   - `php artisan serve` 
+   - `php artisan serve`
    or
    - `composer run dev`
 
