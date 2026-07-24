@@ -3,7 +3,6 @@
     <div class="py-12">
         <div class="max-w-3xl mx-auto sm:px-6 lg:px-8">
 
-
             <div class=" overflow-hidden shadow-sm sm:rounded-lg">
                 <ul class="flex flex-wrap text-sm font-medium text-center bg-white text-gray-500 p-4 justify-center">
                     <x-category-tabs class="me-2"></x-category-tabs>
