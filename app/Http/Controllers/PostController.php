@@ -42,7 +42,6 @@ class PostController extends Controller
         $categories = Category::get();
 
         return view('post.create', ['categories' => $categories]);
-
     }
 
     /**
@@ -97,26 +96,17 @@ class PostController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Post $post)
-    {
-        //
-    }
+    public function edit(Post $post) {}
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Post $post)
-    {
-        //
-    }
+    public function update(Request $request, Post $post) {}
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Post $post)
-    {
-        //
-    }
+    public function destroy(Post $post) {}
 
     public function category(Category $category)
     {

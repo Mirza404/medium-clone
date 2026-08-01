@@ -40,7 +40,7 @@ Project structure (high level)
 
 Important config & tooling
 --------------------------
-- Frontend: Blade [resources/js/app.jsx](resources/views) and [vite.config.js](vite.config.js).
+- Frontend: Blade [resources/views](resources/views) and [vite.config.js](vite.config.js).
 - Tailwind CSS config: [tailwind.config.js](tailwind.config.js) and [postcss.config.js](postcss.config.js).
 - Filesystems and storage: [config/filesystems.php](config/filesystems.php) — ensure `APP_URL` and storage link are configured (`php artisan storage:link`).
 - Database config: [config/database.php](config/database.php).
@@ -56,8 +56,6 @@ Test coverage snapshot
   - **Core app controllers** – `PostController` (85.4 %), `ProfileController` (95.2 %), `PublicProfileController`, `FollowerController`, and `ClapController` all receive direct feature coverage to ensure feed filtering, CRUD flows, and social interactions behave under authenticated sessions.
   - **Validation layers** – `LoginRequest`, `PostCreateRequest`, and `ProfileUpdateRequest` are fully covered, including rate‑limiting and file/type checks.
   - **Domain models & View components** – Category/Clap/Follower/Post/User models and Blade components (`AppLayout`, `CategoryTabs`, `GuestLayout`) are exercised end‑to‑end, confirming read‑time helpers, relationship wiring, and render contracts.
-
-
 
 Pre-commit checks
 -----------------
@@ -88,7 +86,7 @@ Quick local setup
 6. Build assets / run dev server:
    - `npm run dev`
 7. Serve app:
-   - `php artisan serve` 
+   - `php artisan serve`
    or
    - `composer run dev`
 
